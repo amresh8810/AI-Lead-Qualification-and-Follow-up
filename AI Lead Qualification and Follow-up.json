@@ -1,0 +1,248 @@
+{
+  "name": "AI Lead Qualification and Follow-up",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-capture",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "44682209-8234-4aa8-9c40-1da0f6be8966",
+      "name": "Lead Capture Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        112
+      ],
+      "webhookId": "cc1543e5-9f2a-4b40-85c9-b35f9a1f35e2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze this incoming lead:\nName: {{ $json.name }}\nEmail:{{ $json.email }}\nMessage: {{ $json.message }}\n\nTasks:\n1. Determine lead intent (High, Medium, Low).\n2. Draft a highly professional, contextual follow-up email representing AuraFlow AI.\n\nOutput in this format:\nSubject: [{{ $json.message }}]\n\n\nGenerate a professional reply email.\n\nRules:\n- Use \"Amresh Kumar\" as the sender name.\n- Never invent names like Aisha Malik.\n- End every email with:\n\nBest regards,\nAmresh Kumar\nAI Build Agency",
+        "options": {
+          "systemMessage": "You are an expert sales assistant at AuraFlow AI. You qualify leads instantly and draft professional responses."
+        }
+      },
+      "id": "dceaf510-3292-46f9-9c1e-6b50bc540b7f",
+      "name": "Qualify Lead & Draft Reply",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        432,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "283bc052-7dcb-40c2-96c9-b3a0bee5de0d",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        416,
+        320
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "Pfjxm0eDwqOEhkn7",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "https://docs.google.com/spreadsheets/d/1SjeFZZ-PvhuhUN2u_qXzWK0KYb81TfKMRLIQmTktrFU/edit?gid=0#gid=0",
+          "__regex": "https:\\/\\/(?:drive|docs)\\.google\\.com(?:\\/.*|)\\/d\\/([0-9a-zA-Z\\-_]+)(?:\\/.*|)"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1SjeFZZ-PvhuhUN2u_qXzWK0KYb81TfKMRLIQmTktrFU/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "output"
+          ],
+          "schema": [
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "c5546a82-14f2-4dcc-a7cf-496327ca9d96",
+      "name": "Save to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        800,
+        112
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "tovqPjA3c3l3FAuQ",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields').item.json.email }}",
+        "subject": "={{ $('Qualify Lead & Draft Reply').item.json.output.split('\\n\\n')[0].replace('Subject: ', '') }}",
+        "emailType": "text",
+        "message": "={{ $('Qualify Lead & Draft Reply').item.json.output }}",
+        "options": {}
+      },
+      "id": "69a6d792-8744-4fce-a1c1-610110beef62",
+      "name": "Send Follow-up Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1056,
+        112
+      ],
+      "webhookId": "926cce49-5ec5-4328-98ad-3a1b26df6e29",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "932RNgBj63i4joih",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f093213-2cdf-470c-ae3c-bd13af31379c",
+              "name": "name",
+              "value": "={{ JSON.parse($json.body).name }}",
+              "type": "string"
+            },
+            {
+              "id": "82e2517f-1531-4a1d-b807-226e86d3f5b3",
+              "name": "=email",
+              "value": "={{ JSON.parse($json.body).email }}",
+              "type": "string"
+            },
+            {
+              "id": "3d737311-493a-4a7d-8719-1348e997478d",
+              "name": "message",
+              "value": "={{ JSON.parse($json.body).message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        112
+      ],
+      "id": "384402c5-0c70-465f-a357-50119b221068",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Lead Capture Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qualify Lead & Draft Reply": {
+      "main": [
+        [
+          {
+            "node": "Save to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Qualify Lead & Draft Reply",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Send Follow-up Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Qualify Lead & Draft Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "versionId": "84509928-850c-49dd-85df-0c82efa5ef45",
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp",
+    "instanceId": "e397d77519d6da3822049ca63289ef02505cde7277870be626973abc2260dca5"
+  },
+  "id": "cSEuwsl55WHbuYPi",
+  "tags": []
+}
