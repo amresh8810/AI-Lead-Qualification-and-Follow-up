@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     steps[0].classList.add('active');
     logConsole('⚡ Sending webhook payload to n8n cloud instance...');
     
-    fetch('https://adsdfgdgtrtr.app.n8n.cloud/webhook-test/lead-capture', {
+    fetch('https://adsdfgdgtrtr.app.n8n.cloud/webhook/lead-capture', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
