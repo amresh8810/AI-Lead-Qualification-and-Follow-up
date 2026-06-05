@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraFlow AI - AI Automation Agency</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Background Orbs -->
+  <div class="glow-blob glow-1"></div>
+  <div class="glow-blob glow-2"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-container">
+      <div class="logo">
+        <span>AuraFlow AI</span>
+        <span class="badge">Live Demo Dashboard</span>
+      </div>
+      <div>
+        <a href="https://adsdfgdgtrtr.app.n8n.cloud/workflow/cSEuwsl55WHbuYPi" target="_blank" class="badge" style="text-decoration: none; cursor: pointer; background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3);">View Deployed n8n Workflow ⚡</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>We Automate Your Lead Acquisition <span>With AI</span></h1>
+      <p>Capture, qualify, analyze, store, and follow up with inbound leads in under 10 seconds using our enterprise-grade n8n and OpenAI integrations.</p>
+      <a href="#demo" class="hero-cta">Test the Live Simulator 👇</a>
+    </div>
+  </section>
+
+  <!-- Main Demo Section -->
+  <section class="container" id="demo" style="padding-bottom: 60px;">
+    <div class="showcase-grid">
+      <!-- Lead Form Card -->
+      <div class="card">
+        <h2>⚡ Lead Capture Form</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 14px;">Simulate a visitor filling a contact form on your landing page. Submitting this form starts the automated response timeline.</p>
+        <form id="lead-form">
+          <div class="form-group">
+            <label for="form-name">Full Name</label>
+            <input type="text" id="form-name" class="form-control" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="form-email">Email Address</label>
+            <input type="email" id="form-email" class="form-control" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="form-msg">Inquiry Details</label>
+            <textarea id="form-msg" class="form-control" placeholder="I need a customized CRM setup and integration." required></textarea>
+          </div>
+          <button type="submit" class="btn">Submit Lead & Trigger Workflow</button>
+        </form>
+      </div>
+
+      <!-- Chatbot Card -->
+      <div class="card">
+        <h2>🤖 Interactive Agent (Typebot)</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 14px;">A chat agent that qualifies leads on-site. Fill out details here to automatically populate the form on the left.</p>
+        <div class="chatbot-box">
+          <div class="chat-header">
+            <div class="chat-avatar">A</div>
+            <div class="chat-title">
+              <h3>AuraFlow Assistant</h3>
+              <div class="chat-status">Active & Online</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chat-messages">
+            <!-- Bubbles populated by JS -->
+          </div>
+          <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Type your message here...">
+            <button id="chat-send-btn" class="chat-send-btn">➔</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Automation Processing Timeline -->
+    <div class="card timeline-card timeline-section">
+      <h2>📈 Live n8n Engine processing timeline</h2>
+      <p style="color: var(--text-secondary); font-size: 14px;">Watch how our deployed n8n workflow executes node-by-node after submission.</p>
+      
+      <div class="timeline-steps">
+        <div class="timeline-line"></div>
+        <div class="step" id="step-webhook">
+          <div class="step-icon">1</div>
+          <h3>Webhook Node</h3>
+          <p>Triggers instantly when a lead is captured.</p>
+        </div>
+        <div class="step" id="step-openai">
+          <div class="step-icon">2</div>
+          <h3>OpenAI Agent</h3>
+          <p>Qualifies intent and drafts personalized email.</p>
+        </div>
+        <div class="step" id="step-sheets">
+          <div class="step-icon">3</div>
+          <h3>Google Sheets</h3>
+          <p>Appends qualified lead data into CRM database.</p>
+        </div>
+        <div class="step" id="step-gmail">
+          <div class="step-icon">4</div>
+          <h3>Gmail SMTP</h3>
+          <p>Sends instant personalized reply to lead.</p>
+        </div>
+      </div>
+
+      <!-- Terminal Log Console -->
+      <div class="live-console" id="console-log">
+        [System Initialization] Ready. Submit a lead or complete chatbot questions to trigger n8n simulator...
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study Section -->
+  <section class="case-study-section" style="background: rgba(18, 22, 32, 0.4); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
+    <div class="container">
+      <div class="case-study-header">
+        <span class="badge" style="margin-bottom: 16px;">AI Case Study</span>
+        <h2>Why Automation Matters</h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Manual processes cost time, leads, and money. Here is our architectural strategy.</p>
+      </div>
+
+      <div class="case-study-slider">
+        <!-- Slide 1 -->
+        <div class="slide">
+          <div class="slide-number">01</div>
+          <h3>The Problem</h3>
+          <p>Business owners face massive drop-offs because manual lead response times average 4.2 hours.</p>
+          <ul class="slide-bullets">
+            <li>Delayed follow-ups lead to lost deals</li>
+            <li>Inability to identify high-intent leads</li>
+            <li>Hours spent copy-pasting lead details to CRM</li>
+          </ul>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+          <div class="slide-number">02</div>
+          <h3>The Solution</h3>
+          <p>Our autonomous AI engine qualifies, saves, and emails leads under 10 seconds of submission.</p>
+          <ul class="slide-bullets">
+            <li>Instant Webhook capture via n8n</li>
+            <li>AI Intent Analysis & personalized drafts</li>
+            <li>Automated CRM database tracking</li>
+          </ul>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+          <div class="slide-number">03</div>
+          <h3>The Impact</h3>
+          <p>24/7 autonomous engagement converting traffic while your sales team sleeps.</p>
+          <ul class="slide-bullets">
+            <li>Lead follow-ups reduced to 10s</li>
+            <li>Intent scores flagged instantly</li>
+            <li>100% automated logging</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 AuraFlow AI Automation. Built with n8n, OpenAI, and premium UX principles.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
